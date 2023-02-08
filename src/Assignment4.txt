@@ -1,0 +1,228 @@
+mysql> use practice;
+Database changed
+mysql> create table customers(customer_id int not null primary key,name varchar(20),age int ,address varchar(20),salary int);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> create table orders(o_id int not null primary key,o_date date,amount int,customer_id int);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> insert into customers values(1,"Shreya",27,"Dewas",10000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customers(customer_id,name,age,address,salary) values(2,"Krati",24,"Betul",15000),(3,"Mrunmai",25,"Pune",25000),(4,"Aniket",26,"Mumbai",30000),(5,"Harini",21,"Andhra Pradesh",35000);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into orders(o_id,o_date,amount,customer_id) values(1,'2023-06-21',600,1),(2,'2023-07-29',403,2),(3,'2022-09-30',200,1),(4,'2022-11-30',389,3),(5,'2023-12-05',400,2);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from customers;
++-------------+---------+------+----------------+--------+
+| customer_id | name    | age  | address        | salary |
++-------------+---------+------+----------------+--------+
+|           1 | Shreya  |   27 | Dewas          |  10000 |
+|           2 | Krati   |   24 | Betul          |  15000 |
+|           3 | Mrunmai |   25 | Pune           |  25000 |
+|           4 | Aniket  |   26 | Mumbai         |  30000 |
+|           5 | Harini  |   21 | Andhra Pradesh |  35000 |
++-------------+---------+------+----------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from orders;
++------+------------+--------+-------------+
+| o_id | o_date     | amount | customer_id |
++------+------------+--------+-------------+
+|    1 | 2023-06-21 |    600 |           1 |
+|    2 | 2023-07-29 |    403 |           2 |
+|    3 | 2022-09-30 |    200 |           1 |
+|    4 | 2022-11-30 |    389 |           3 |
+|    5 | 2023-12-05 |    400 |           2 |
++------+------------+--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table orders add foreign key(customer_id) references customers(customer_id);
+Query OK, 5 rows affected (0.27 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc orders;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| o_id        | int  | NO   | PRI | NULL    |       |
+| o_date      | date | YES  |     | NULL    |       |
+| amount      | int  | YES  |     | NULL    |       |
+| customer_id | int  | YES  | MUL | NULL    |       |
++-------------+------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+mysql> select o.customer_id,c.name,o.amount,o.o_date from customers c inner join orders o on c.customer_id = o.customer_id;
++-------------+---------+--------+------------+
+| customer_id | name    | amount | o_date     |
++-------------+---------+--------+------------+
+|           1 | Shreya  |    600 | 2023-06-21 |
+|           1 | Shreya  |    200 | 2022-09-30 |
+|           2 | Krati   |    403 | 2023-07-29 |
+|           2 | Krati   |    400 | 2023-12-05 |
+|           3 | Mrunmai |    389 | 2022-11-30 |
++-------------+---------+--------+------------+
+5 rows in set (0.00 sec)
+
+
+mysql> select o.customer_id,c.name,o.amount,o.o_date from customers c left outer join orders o on c.customer_id = o.customer_id;
++-------------+---------+--------+------------+
+| customer_id | name    | amount | o_date     |
++-------------+---------+--------+------------+
+|           1 | Shreya  |    600 | 2023-06-21 |
+|           1 | Shreya  |    200 | 2022-09-30 |
+|           2 | Krati   |    403 | 2023-07-29 |
+|           2 | Krati   |    400 | 2023-12-05 |
+|           3 | Mrunmai |    389 | 2022-11-30 |
+|        NULL | Aniket  |   NULL | NULL       |
+|        NULL | Harini  |   NULL | NULL       |
++-------------+---------+--------+------------+
+7 rows in set (0.00 sec)
+
+
+mysql> select o.customer_id,c.name,o.amount,o.o_date from customers c right outer join orders o on c.customer_id = o.customer_id;
++-------------+---------+--------+------------+
+| customer_id | name    | amount | o_date     |
++-------------+---------+--------+------------+
+|           1 | Shreya  |    600 | 2023-06-21 |
+|           2 | Krati   |    403 | 2023-07-29 |
+|           1 | Shreya  |    200 | 2022-09-30 |
+|           3 | Mrunmai |    389 | 2022-11-30 |
+|           2 | Krati   |    400 | 2023-12-05 |
++-------------+---------+--------+------------+
+5 rows in set (0.00 sec)
+
+
+MYSQL DOESNOT SUPPORT FULL OUTER JOIN 
+mysql> select customer_id,name from customers union all select amount,o_date from orders;
++-------------+------------+
+| customer_id | name       |
++-------------+------------+
+|           1 | Shreya     |
+|           2 | Krati      |
+|           3 | Mrunmai    |
+|           4 | Aniket     |
+|           5 | Harini     |
+|         600 | 2023-06-21 |
+|         403 | 2023-07-29 |
+|         200 | 2022-09-30 |
+|         389 | 2022-11-30 |
+|         400 | 2023-12-05 |
++-------------+------------+
+10 rows in set (0.00 sec)
+
+
+
+mysql> select a.name as name,b.name as name from customers a,customers b where a.customer_id!=b.customer_id and a.address= b.address;
++---------+---------+
+| name    | name    |
++---------+---------+
+| Aniket  | Mrunmai |
+| Mrunmai | Aniket  |
++---------+---------+
+2 rows in set (0.00 sec)
+
+
+
+
+mysql> select o.customer_id,c.name,o.amount,o.o_date from customers c , orders o;
++-------------+---------+--------+------------+
+| customer_id | name    | amount | o_date     |
++-------------+---------+--------+------------+
+|           1 | Harini  |    600 | 2023-06-21 |
+|           1 | Aniket  |    600 | 2023-06-21 |
+|           1 | Mrunmai |    600 | 2023-06-21 |
+|           1 | Krati   |    600 | 2023-06-21 |
+|           1 | Shreya  |    600 | 2023-06-21 |
+|           2 | Harini  |    403 | 2023-07-29 |
+|           2 | Aniket  |    403 | 2023-07-29 |
+|           2 | Mrunmai |    403 | 2023-07-29 |
+|           2 | Krati   |    403 | 2023-07-29 |
+|           2 | Shreya  |    403 | 2023-07-29 |
+|           1 | Harini  |    200 | 2022-09-30 |
+|           1 | Aniket  |    200 | 2022-09-30 |
+|           1 | Mrunmai |    200 | 2022-09-30 |
+|           1 | Krati   |    200 | 2022-09-30 |
+|           1 | Shreya  |    200 | 2022-09-30 |
+|           3 | Harini  |    389 | 2022-11-30 |
+|           3 | Aniket  |    389 | 2022-11-30 |
+|           3 | Mrunmai |    389 | 2022-11-30 |
+|           3 | Krati   |    389 | 2022-11-30 |
+|           3 | Shreya  |    389 | 2022-11-30 |
+|           2 | Harini  |    400 | 2023-12-05 |
+|           2 | Aniket  |    400 | 2023-12-05 |
+|           2 | Mrunmai |    400 | 2023-12-05 |
+|           2 | Krati   |    400 | 2023-12-05 |
+|           2 | Shreya  |    400 | 2023-12-05 |
++-------------+---------+--------+------------+
+25 rows in set (0.00 sec)
+
+
+
+
+mysql> select * from customers where salary in (select salary from customers where salary>20000);
++-------------+---------+------+----------------+--------+
+| customer_id | name    | age  | address        | salary |
++-------------+---------+------+----------------+--------+
+|           3 | Mrunmai |   25 | Pune           |  25000 |
+|           4 | Aniket  |   26 | Pune           |  30000 |
+|           5 | Harini  |   21 | Andhra Pradesh |  35000 |
++-------------+---------+------+----------------+--------+
+3 rows in set (0.00 sec)
+
+
+mysql> create table cust_bkp as select * from customers;
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from cust_bkp;
++-------------+---------+------+----------------+--------+
+| customer_id | name    | age  | address        | salary |
++-------------+---------+------+----------------+--------+
+|           1 | Shreya  |   27 | Dewas          |  10000 |
+|           2 | Krati   |   24 | Betul          |  15000 |
+|           3 | Mrunmai |   25 | Pune           |  25000 |
+|           4 | Aniket  |   26 | Pune           |  30000 |
+|           5 | Harini  |   21 | Andhra Pradesh |  35000 |
++-------------+---------+------+----------------+--------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> UPDATE customers SET salary = salary + salary*0.1 where age In(select Age from cust_bkp WHERE age>24);
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from cust_bkp;
++-------------+---------+------+----------------+--------+
+| customer_id | name    | age  | address        | salary |
++-------------+---------+------+----------------+--------+
+|           1 | Shreya  |   27 | Dewas          |  10000 |
+|           2 | Krati   |   24 | Betul          |  15000 |
+|           3 | Mrunmai |   25 | Pune           |  25000 |
+|           4 | Aniket  |   26 | Pune           |  30000 |
+|           5 | Harini  |   21 | Andhra Pradesh |  35000 |
++-------------+---------+------+----------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers;
++-------------+---------+------+----------------+--------+
+| customer_id | name    | age  | address        | salary |
++-------------+---------+------+----------------+--------+
+|           1 | Shreya  |   27 | Dewas          |   1210 |
+|           2 | Krati   |   24 | Betul          |   1500 |
+|           3 | Mrunmai |   25 | Pune           |   3025 |
+|           4 | Aniket  |   26 | Pune           |   3630 |
+|           5 | Harini  |   21 | Andhra Pradesh |  35000 |
++-------------+---------+------+----------------+--------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> delete from customers where age in (select age from cust_bkp where age>26);
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`practice`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`))
