@@ -1,0 +1,205 @@
+1)JVM (Java Virtual Machine) is the platform-dependent component in the Java ecosystem,
+  as it is responsible for executing the Java code on a specific operating system.
+
+  JRE (Java Runtime Environment) is also platform-dependent and includes the JVM as well
+  as other necessary resources for running Java applications, such as the class libraries
+  and the Java class loader.
+
+  JDK (Java Development Kit) is a complete and self-contained development environment for Java,
+  including the JRE, the Java compiler, and other development tools. It is also platform-dependent,
+  meaning that there are different versions for different operating systems.
+
+  Java code is considered platform-independent because it is compiled into an intermediate form called bytecode,
+  which can be executed on any platform that has a JVM (Java Virtual Machine) installed. The JVM acts as an 
+  interpreter for the bytecode, translating it into machine-readable instructions that can be executed on the 
+  specific platform. 
+
+
+2)The JVM acts as an interpreter for the bytecode, translating it into machine-readable instructions that can be
+  executed on the specific platform. This means that a Java program written on one platform can run on any other 
+  platform with a JVM, without the need for recompilation. One of the important thing to know is that, you can not
+  run Java program from your machine if you don't have either JRE or JDK.So we can download JRE directly without 
+  downloading JDK.
+
+=====================================================================================================================
+
+4)Access specifier and access modifier are terms that are used interchangeably in Java to refer to the level of access
+ or visibility that is granted to members(fields, methods, etc.) of a class.
+
+ An access specifier determines who can access the members of a class. Java provides three levels of access:
+ Public: Members marked as public can be accessed from anywhere in the code.
+ Private: Members marked as private can only be accessed within the class in which they are declared.
+ Protected: Members marked as protected can be accessed within the class in which they are declared, as well as any subclasses.
+
+ An access modifier, on the other hand, is a broader term that encompasses other types of restrictions that can be placed on 
+ members, such as final, static,abstract, etc. These access modifiers can be used in combination with the access specifiers to
+ further restrict the visibility and usage of the members.
+
+ So, to summarize:
+ Access specifier determines the visibility of members within the class and its subclasses.
+ Access modifier encompasses access specifiers and other restrictions that can be applied to members.
+
+
+
+6)No, you cannot have multiple public static void main(String[] args) methods in a single class in Java. 
+
+  The main method is the starting point of a Java program, and having multiple main methods in a single class
+  would cause ambiguity and make it unclear which method the Java Virtual Machine (JVM) should start executing.
+
+  If you want to run different code blocks in the same class, you can use methods other than main and call them from the main method, 
+  or you can create multiple classes and have each one with its own main method.
+
+
+
+7)No, you cannot overload or override the public static void main(String[] args) method in Java. The main method is a special method
+  that serves as the entry point for a Java program, and it must have the exact signature specified above in order to be recognized
+  by the Java Virtual Machine (JVM) as the starting point for the program.
+
+  The method signature cannot be changed, and attempting to do so will result in a compile-time error.
+  Overloading and overriding are concepts related to polymorphism in object-oriented programming, and they apply to regular methods, 
+  but not to the main method.
+
+
+
+8)No, you cannot write the main method as private, protected, or default in Java.The main method must be declared as public in order
+  to be accessible from outside the class, and to be recognized as the starting point of the Java program by the Java Virtual Machine (JVM).
+
+  The public access modifier on the main method allows it to be called from outside the class, including by the JVM when it starts executing 
+  the program.If the main method is declared as private, protected, or default, it will not be accessible from outside the class and the JVM
+  will not be able to find and execute the method, causing the program to not run.
+
+
+9)In Java, the public static void main(String[] args) method serves as the entry point for the Java Virtual Machine (JVM) to start executing
+  a program.So, having a main method is necessary to run a Java program.
+  However, there are some alternatives to executing code without a main method, for example:
+
+  Using a static initializer block: You can write code inside a static initializer block, which is a block of code enclosed in curly braces
+  and prefixed with the static keyword. The code inside a static initializer block is executed when the class is loaded by the JVM, and it 
+  can be used to run code without a main method.
+
+  Creating a class with a constructor: You can write code inside a constructor of a class. The code inside a constructor is executed when an
+  instance of the class is created, and it can be used to run code without a main method.
+
+  Using an interface: You can create an interface that defines a method with no body. Then, you can implement the interface in a class and
+  provide a concrete implementation for the method. When the class is loaded by the JVM, the method will be executed.
+
+  It's important to note that in these alternatives, the code will be executed automatically when the JVM loads the class, 
+  and you won't have control over the arguments passed to the code. If you need to pass arguments or have more control over the execution of 
+  your code,you will need to use a main method.
+
+
+10)No, you cannot change the return type of the public static void main(String[] args) method in Java. 
+
+   The main method must have a return type of void in order to be recognized by the Java Virtual Machine (JVM) as the entry point for a Java
+   program.The void return type indicates that the main method does not return a value. If you try to change the return type to a different
+   data type,such as int or String, the JVM will not be able to find and execute the method, causing the program to not run.
+
+   It's important to keep the signature of the main method as public static void main(String[] args) to ensure that it can be recognized and
+   executed by the JVM as the starting point for the program.
+
+
+11)strictfp is a keyword in Java used to indicate that a method or a class should use strict floating-point calculations. A strict floating-point
+   calculation is a calculation that follows the rules defined by the IEEE 754 standard for floating-point arithmetic, which is a standard for
+   representing real numbers in a computer.
+​
+   By using the strictfp keyword, you ensure that your code will produce the same results on different platforms, regardless of the underlying 
+   hardware and operating system.This is particularly important for applications that require high precision, such as scientific or financial
+   applications.
+
+   The strictfp keyword can be applied to both a method and a class. If applied to a class, it means that all floating-point calculations performed
+   within the class will use strict floating-point arithmetic. If applied to a method, it means that only the floating-point calculations performed
+   within the method will use strict floating-point arithmetic.
+
+  It's worth noting that the strictfp keyword is optional and not widely used in Java programming, as most Java applications do not require strict
+  floating-point calculations.
+
+
+====================================================================================================================================================
+
+
+2)class TypeOfVariables{
+     
+     int result;      //global variable
+     static int count=0;
+     
+     public void add(){
+         
+         int number1=1,number2=5;     //local variable
+         result=number1+number2;
+         System.out.println(result);
+     }
+     
+     public static void details(){
+         count++;
+         System.out.println(count);
+     }
+     
+     
+     
+}
+
+
+
+
+
+public class Main
+{
+	public static void main(String[] args) {
+		
+	TypeOfVariables typeofvariables = new TypeOfVariables();
+	typeofvariables.add();
+	TypeOfVariables.count=100;
+	TypeOfVariables.details();
+	
+		
+		
+		
+	}
+}
+
+
+OUTPUT:-
+
+6
+101
+
+
+==========================================================================================
+
+
+3)INT
+
+public class Main
+{
+	public static void main(String[] args) {
+	    int sum;
+	    int Num1 = 2147483648;
+	    int Num2 = 2147483647;
+	    sum=Num1+Num2;
+	    
+	    
+		System.out.println(sum);
+	}
+}
+
+//error: integer number too large
+
+
+
+public class Main
+{
+	public static void main(String[] args) {
+	    int sum;
+	    int Num1 = 2147483646;
+	    int Num2 = 2147483647;
+	    sum=Num1+Num2;
+	    
+	    
+		System.out.println(sum);
+	}
+}
+
+//output =-3   (signed value)
+//can be typecasted to long
+
+===========================================================================================
