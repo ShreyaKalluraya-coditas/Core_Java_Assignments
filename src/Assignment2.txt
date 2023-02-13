@@ -1,0 +1,374 @@
+mysql> create database assignment;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use assignment;
+Database changed
+
+mysql> create table Student(roll_no int not null primary key,name varchar(20),division varchar(20),branch varchar(20),city varchar(20),marks int);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| roll_no  | int         | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| division | varchar(20) | YES  |     | NULL    |       |
+| branch   | varchar(20) | YES  |     | NULL    |       |
+| city     | varchar(20) | YES  |     | NULL    |       |
+| marks    | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> insert into student(roll_no,name,division,branch,city,marks) values(1,"Shreya","A","CSE","Madhya Pradesh",74),(2,"Krati","B","CSE","Betul",80),(3,"Harini","A","ECE","Andhra Pradesh",89),(4,"Bala","B","CSE","Andhra Pradesh",68),(5,"Sujan","C","Mechanical","Nanded",58),(6,"Tanmay","B","CSE","Pune",70),(7,"Yash","C","MCA","Uttar Pradesh",93),(8,"Aniket","A","ECE","Pune",89),(9,"Mrunmai","C","IT","Pune",59),(10,"Aryaman","A","CSE","Madhya Pradesh",30);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select name,city from student;
++---------+----------------+
+| name    | city           |
++---------+----------------+
+| Shreya  | Madhya Pradesh |
+| Krati   | Betul          |
+| Harini  | Andhra Pradesh |
+| Bala    | Andhra Pradesh |
+| Sujan   | Nanded         |
+| Tanmay  | Pune           |
+| Yash    | Uttar Pradesh  |
+| Aniket  | Pune           |
+| Mrunmai | Pune           |
+| Aryaman | Madhya Pradesh |
++---------+----------------+
+10 rows in set (0.00 sec)
+
+mysql> select distinct name from student;
++---------+
+| name    |
++---------+
+| Shreya  |
+| Krati   |
+| Harini  |
+| Bala    |
+| Sujan   |
+| Tanmay  |
+| Yash    |
+| Aniket  |
+| Mrunmai |
+| Aryaman |
++---------+
+10 rows in set (0.00 sec)
+
+mysql> select * from student;
++---------+---------+----------+------------+----------------+-------+
+| roll_no | name    | division | branch     | city           | marks |
++---------+---------+----------+------------+----------------+-------+
+|       1 | Shreya  | A        | CSE        | Madhya Pradesh |    74 |
+|       2 | Krati   | B        | CSE        | Betul          |    80 |
+|       3 | Harini  | A        | ECE        | Andhra Pradesh |    89 |
+|       4 | Bala    | B        | CSE        | Andhra Pradesh |    68 |
+|       5 | Sujan   | C        | Mechanical | Nanded         |    58 |
+|       6 | Tanmay  | B        | CSE        | Pune           |    70 |
+|       7 | Yash    | C        | MCA        | Uttar Pradesh  |    93 |
+|       8 | Aniket  | A        | ECE        | Pune           |    89 |
+|       9 | Mrunmai | C        | IT         | Pune           |    59 |
+|      10 | Aryaman | A        | CSE        | Madhya Pradesh |    30 |
++---------+---------+----------+------------+----------------+-------+
+10 rows in set (0.00 sec)
+
+mysql> select name from student where marks>75;
++--------+
+| name   |
++--------+
+| Krati  |
+| Harini |
+| Yash   |
+| Aniket |
++--------+
+4 rows in set (0.00 sec)
+
+
+mysql> select name from student where name like 's%';
++--------+
+| name   |
++--------+
+| Shreya |
+| Sujan  |
++--------+
+2 rows in set (0.00 sec)
+
+
+mysql> select name from student where marks between 50 and 60;
++---------+
+| name    |
++---------+
+| Sujan   |
+| Mrunmai |
++---------+
+2 rows in set (0.00 sec)
+
+
+mysql> select * from student where branch='CSE' and city='Pune';
++---------+--------+----------+--------+------+-------+
+| roll_no | name   | division | branch | city | marks |
++---------+--------+----------+--------+------+-------+
+|       6 | Tanmay | B        | CSE    | Pune |    70 |
++---------+--------+----------+--------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> update student set branch='IT' where roll_no=9;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> select * from student;
++---------+---------+----------+------------+----------------+-------+
+| roll_no | name    | division | branch     | city           | marks |
++---------+---------+----------+------------+----------------+-------+
+|       1 | Shreya  | A        | CSE        | Madhya Pradesh |    74 |
+|       2 | Krati   | B        | CSE        | Betul          |    80 |
+|       3 | Harini  | A        | ECE        | Andhra Pradesh |    89 |
+|       4 | Bala    | B        | CSE        | Andhra Pradesh |    68 |
+|       5 | Sujan   | C        | Mechanical | Nanded         |    58 |
+|       6 | Tanmay  | B        | CSE        | Pune           |    70 |
+|       7 | Yash    | C        | MCA        | Uttar Pradesh  |    93 |
+|       8 | Aniket  | A        | ECE        | Pune           |    89 |
+|       9 | Mrunmai | C        | IT         | Pune           |    59 |
+|      10 | Aryaman | A        | CSE        | Madhya Pradesh |    30 |
++---------+---------+----------+------------+----------------+-------+
+10 rows in set (0.00 sec)
+
+mysql> delete from student where division = 'B';
+Query OK, 3 rows affected (0.02 sec)
+
+mysql> select * from student;
++---------+---------+----------+------------+----------------+-------+
+| roll_no | name    | division | branch     | city           | marks |
++---------+---------+----------+------------+----------------+-------+
+|       1 | Shreya  | A        | CSE        | Madhya Pradesh |    74 |
+|       3 | Harini  | A        | ECE        | Andhra Pradesh |    89 |
+|       5 | Sujan   | C        | Mechanical | Nanded         |    58 |
+|       7 | Yash    | C        | MCA        | Uttar Pradesh  |    93 |
+|       8 | Aniket  | A        | ECE        | Pune           |    89 |
+|       9 | Mrunmai | C        | IT         | Pune           |    59 |
+|      10 | Aryaman | A        | CSE        | Madhya Pradesh |    30 |
++---------+---------+----------+------------+----------------+-------+
+7 rows in set (0.00 sec)
+
+
+mysql> create table TE_Students(roll_no int not null primary key,name varchar(30));
+Query OK, 0 rows affected (0.11 sec)
+
+
+mysql> insert into TE_Students(roll_no,name) values(1,"Pooja"),(2,"Vanshika"),(3,"Ananya");
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from TE_Students;
++---------+----------+
+| roll_no | name     |
++---------+----------+
+|       1 | Pooja    |
+|       2 | Vanshika |
+|       3 | Ananya   |
++---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select roll_no from student union select roll_no from TE_Students;
++---------+
+| roll_no |
++---------+
+|       1 |
+|       3 |
+|       5 |
+|       7 |
+|       8 |
+|       9 |
+|      10 |
+|       2 |
++---------+
+8 rows in set (0.00 sec)
+
+mysql> select upper(name) as upper_case_name from student;
++-----------------+
+| upper_case_name |
++-----------------+
+| SHREYA          |
+| HARINI          |
+| SUJAN           |
+| YASH            |
+| ANIKET          |
+| MRUNMAI         |
+| ARYAMAN         |
++-----------------+
+7 rows in set (0.01 sec)
+
+mysql> select bin(marks),hex(marks) from student;
++------------+------------+
+| bin(marks) | hex(marks) |
++------------+------------+
+| 1001010    | 4A         |
+| 1011001    | 59         |
+| 111010     | 3A         |
+| 1011101    | 5D         |
+| 1011001    | 59         |
+| 111011     | 3B         |
+| 11110      | 1E         |
++------------+------------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> create table Customers(cust_id int not null primary key auto_increment,cust_name varchar(20),product varchar(20),quantity int, total_price int);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc Customers;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| cust_id     | int         | NO   | PRI | NULL    | auto_increment |
+| cust_name   | varchar(20) | YES  |     | NULL    |                |
+| product     | varchar(20) | YES  |     | NULL    |                |
+| quantity    | int         | YES  |     | NULL    |                |
+| total_price | int         | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Customers(cust_name,product,quantity,total_price) values("Goldex","Pen",15,30),("Zouk","Bags",10,10000),("Apsara","Pencil",50,100),("Addidas","Shoes",3,6000),("H&M","Tops",6,4000);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from Customers;
++---------+-----------+---------+----------+-------------+
+| cust_id | cust_name | product | quantity | total_price |
++---------+-----------+---------+----------+-------------+
+|       1 | Goldex    | Pen     |       15 |          30 |
+|       2 | Zouk      | Bags    |       10 |       10000 |
+|       3 | Apsara    | Pencil  |       50 |         100 |
+|       4 | Addidas   | Shoes   |        3 |        6000 |
+|       5 | H&M       | Tops    |        6 |        4000 |
++---------+-----------+---------+----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table Customers add price_per_quantity int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Customers;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| cust_id            | int         | NO   | PRI | NULL    | auto_increment |
+| cust_name          | varchar(20) | YES  |     | NULL    |                |
+| product            | varchar(20) | YES  |     | NULL    |                |
+| quantity           | int         | YES  |     | NULL    |                |
+| total_price        | int         | YES  |     | NULL    |                |
+| price_per_quantity | int         | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Customers;
++---------+-----------+---------+----------+-------------+--------------------+
+| cust_id | cust_name | product | quantity | total_price | price_per_quantity |
++---------+-----------+---------+----------+-------------+--------------------+
+|       1 | Goldex    | Pen     |       15 |          30 |               NULL |
+|       2 | Zouk      | Bags    |       10 |       10000 |               NULL |
+|       3 | Apsara    | Pencil  |       50 |         100 |               NULL |
+|       4 | Addidas   | Shoes   |        3 |        6000 |               NULL |
+|       5 | H&M       | Tops    |        6 |        4000 |               NULL |
++---------+-----------+---------+----------+-------------+--------------------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> alter table Customers add price_per_quantity int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Customers;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| cust_id            | int         | NO   | PRI | NULL    | auto_increment |
+| cust_name          | varchar(20) | YES  |     | NULL    |                |
+| product            | varchar(20) | YES  |     | NULL    |                |
+| quantity           | int         | YES  |     | NULL    |                |
+| total_price        | int         | YES  |     | NULL    |                |
+| price_per_quantity | int         | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Customers;
++---------+-----------+---------+----------+-------------+--------------------+
+| cust_id | cust_name | product | quantity | total_price | price_per_quantity |
++---------+-----------+---------+----------+-------------+--------------------+
+|       1 | Goldex    | Pen     |       15 |          30 |               NULL |
+|       2 | Zouk      | Bags    |       10 |       10000 |               NULL |
+|       3 | Apsara    | Pencil  |       50 |         100 |               NULL |
+|       4 | Addidas   | Shoes   |        3 |        6000 |               NULL |
+|       5 | H&M       | Tops    |        6 |        4000 |               NULL |
++---------+-----------+---------+----------+-------------+--------------------+
+5 rows in set (0.00 sec)
+
+mysql> create view Cust_View as select cust_id,cust_name from Customers;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from Cust_View;
++---------+-----------+
+| cust_id | cust_name |
++---------+-----------+
+|       1 | Goldex    |
+|       2 | Zouk      |
+|       3 | Apsara    |
+|       4 | Addidas   |
+|       5 | H&M       |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> alter view cust_view(cust_id,cust_name,total_price)as select cust_id,cust_name,total_price from customers;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from cust_view;
++---------+-----------+-------------+
+| cust_id | cust_name | total_price |
++---------+-----------+-------------+
+|       1 | Goldex    |          30 |
+|       2 | Zouk      |       10000 |
+|       3 | Apsara    |         100 |
+|       4 | Addidas   |        6000 |
+|       5 | H&M       |        4000 |
++---------+-----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> drop view cust_view;
+Query OK, 0 rows affected (0.02 sec)
+
+
+mysql> create index cust_index on customers(cust_name);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> drop index cust_index on customers;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table customers modify cust_id int auto_increment;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customers;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| cust_id            | int         | NO   | PRI | NULL    | auto_increment |
+| cust_name          | varchar(20) | YES  |     | NULL    |                |
+| product            | varchar(20) | YES  |     | NULL    |                |
+| quantity           | int         | YES  |     | NULL    |                |
+| total_price        | int         | YES  |     | NULL    |                |
+| price_per_quantity | int         | YES  |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table customers rename to New_Customers;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> drop table new_Customers;
+Query OK, 0 rows affected (0.04 sec)
